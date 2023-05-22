@@ -50,9 +50,12 @@ const MifosUser = MifosUserModel(sequelize);
 const { MifosLoanModel } = require("./models/MifosLoan");
 const MifosLoan = MifosLoanModel(sequelize);
 
+const { MifosLenderModel } = require("./models/MifosLender");
+const MifosLender = MifosLenderModel(sequelize);
+
 const migrateDb = process.env.MIGRATE_DB || configs.database.migrate;
 if (migrateDb == "TRUE") {
-sequelize.sync({force:true,alter:true}).then(() => {
+sequelize.sync({force:false,alter:true}).then(() => {
 		console.log(`All tables synced!`);
 		process.exit(0);
 	});
@@ -60,5 +63,6 @@ sequelize.sync({force:true,alter:true}).then(() => {
 
 module.exports = {
 	MifosUser,
-	MifosLoan
+	MifosLoan,
+	MifosLender
 };

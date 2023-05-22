@@ -1,7 +1,7 @@
 const { default: Axios } = require("axios");
 const config = require("../config.json");
 const { MifosUser,MifosLoan } = require("../db");
-const https = require('node:https');
+const https = require('https');
 var JSON = require("querystring");
 const { isEmpty } = require("lodash");
 
@@ -586,27 +586,28 @@ module.exports.getLoanStatement = async (req, res, next) => {
 
 //retrieve the paymenttypes
 module.exports.paymenttypes = async (req, res, next) => {
-	try {
-		const accessToken = req.headers["access-token"];
-		const url = `${config.mifosUrl}/paymenttypes`;
-		await Axios({
-			method: "GET",
-			url: url,
-			headers: {
-				"Content-Type": "application/json",
-				"Fineract-Platform-TenantId": `${config.mifosTenantId}`,
-				Authorization: `Basic ${accessToken}`,
-			},
-			httpsAgent: new https.Agent({ rejectUnauthorized: false })
-		}).then((response) => {
-			res.json({
-				status: "success",
-				result: response.data,
-			});
-		});
-	} catch (err) {
-		return next(err);
-	}
+	console.log('We are here')
+	// try {
+	// 	const accessToken = req.headers["access-token"];
+	// 	const url = `${config.mifosUrl}/paymenttypes`;
+	// 	await Axios({
+	// 		method: "GET",
+	// 		url: url,
+	// 		headers: {
+	// 			"Content-Type": "application/json",
+	// 			"Fineract-Platform-TenantId": `${config.mifosTenantId}`,
+	// 			Authorization: `Basic ${accessToken}`,
+	// 		},
+	// 		httpsAgent: new https.Agent({ rejectUnauthorized: false })
+	// 	}).then((response) => {
+	// 		res.json({
+	// 			status: "success",
+	// 			result: response.data,
+	// 		});
+	// 	});
+	// } catch (err) {
+	// 	return next(err);
+	// }
 };
 
 //calculate amortization schedule
@@ -687,4 +688,21 @@ module.exports.client_loan_balance = async (req, res, next) => {
 	} catch (err) {
 		console.log (err);
 	}
+};
+
+//Here are my functions
+module.exports.retrieve_lender = async (req, res, next) => {
+	try {
+		const id = req.params.id
+		
+		const body = req.body
+
+		res.json({
+			id : id,
+			body : body.password
+		})
+	} catch (error) {
+		console.log(error)
+	}
+// console.log('We are good')
 };

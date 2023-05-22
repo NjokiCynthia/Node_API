@@ -53,4 +53,8 @@ router.post('/paymenttypes', mifosController.paymenttypes);
 
 //client loan Balance.
 router.post('/client/account/:id', mifosController.client_loan_balance);
+
+//Here are my routes
+router.post('/lender/:id', mifosController.retrieve_lender);
+
 module.exports = router;
